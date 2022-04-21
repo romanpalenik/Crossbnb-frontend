@@ -1,30 +1,18 @@
-import type { NextPage } from "next";
-import React, { useState, useEffect } from "react";
-
-import { MetaMaskInpageProvider } from "@metamask/providers";
-import { Title, Text, Space, Button, Group, Stepper } from "@mantine/core";
-
-import welcomeStyles from "../styles/welcomePage.module.css";
+import { Title, Space, Group, Button, Text, Stepper } from "@mantine/core";
+import { NextPage } from "next";
 import Link from "next/link";
+import React from "react";
 import { AppFooter } from "../components/partials/footer/footer";
-import Image from "next/image";
+import welcomeStyles from "../styles/welcomePage.module.css";
 
-declare global {
-  interface Window {
-    ethereum: MetaMaskInpageProvider;
-  }
-}
-
-const Home: NextPage = () => {
-  const [active, setActive] = useState(1);
-
+const NewLanding: NextPage = () => {
   return (
-    <div className={welcomeStyles.welcomeText}>
-      <div style={{ marginBottom: "100px", display: "flex" }}>
-        <div style={{ marginRight: "50px" }}>
-          <Title order={1}>Let &apos s go to travel</Title>
+    <div>
+      <div className={welcomeStyles.welcomeText2}>
+        <div>
+          <Title order={1}>Let's go to travel</Title>
           <Space h="lg" />
-          <Text>
+          <Text weight={700} styles={{ color: "white" }}>
             Create rent offer or rent an apartment while taking advantage of
             cross chain payment{" "}
           </Text>
@@ -38,16 +26,15 @@ const Home: NextPage = () => {
             </Link>
           </Group>
         </div>
-
-        <Image
-          src="/../public/dom.jpg"
-          alt="House to rent"
-          width={800}
-          height={400}
-        ></Image>
       </div>
 
-      <div style={{ marginBottom: "100px" }}>
+      <div
+        style={{
+          marginBottom: "100px",
+          marginTop: "100px",
+          paddingLeft: "6em",
+        }}
+      >
         <Space h="lg" />
         <Title order={1}>Use your ERC20 to rent place to stay on trip</Title>
 
@@ -63,14 +50,24 @@ const Home: NextPage = () => {
         </Group>
       </div>
 
-      <div style={{ marginBottom: "100px", paddingRight: "10em" }}>
+      <div
+        style={{
+          marginBottom: "100px",
+          paddingRight: "6em;",
+          paddingLeft: "6em",
+        }}
+      >
         <Title order={1}>Earn money from renting your home in 3 steps</Title>
         <Space h="xl" />
-        <Stepper color="gray" size="md" active={0}>
+        <Stepper color="gray" size="md" active={0} style={{ margin: "50px" }}>
           <Stepper.Step label="Step 1" description="Register real estate" />
           <Stepper.Step label="Step 2" description="Create offer" />
           <Stepper.Step label="Step 3" description="Get money from renting" />
         </Stepper>
+
+        <Link href="/createOffer" passHref>
+          <Button>Register real estate</Button>
+        </Link>
       </div>
 
       <AppFooter></AppFooter>
@@ -78,4 +75,4 @@ const Home: NextPage = () => {
   );
 };
 
-export default Home;
+export default NewLanding;

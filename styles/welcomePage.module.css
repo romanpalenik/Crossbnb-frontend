@@ -1,0 +1,19 @@
+.welcomeText {
+  padding-left: 10em;
+  padding-top: 10em;
+  /* background-image: url("../public/dom.jpg");
+  background-size: cover;
+  background-position: center; */
+}
+
+.welcomeText2 {
+  height: 500px;
+  background-image: url("../public/dom5.jpg");
+  background-size: cover;
+  background-position: center;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  border-radius: 15px;
+}
