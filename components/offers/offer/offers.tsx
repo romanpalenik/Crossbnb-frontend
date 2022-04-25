@@ -13,9 +13,11 @@ import React from "react";
 
 interface OfferProps {
   id: number;
+  paymentToken: string;
+  price: number;
 }
 
-export const OfferCard = ({ id }: OfferProps) => {
+export const OfferCard = ({ id, paymentToken, price }: OfferProps) => {
   const theme = useMantineTheme();
 
   const secondaryColor =
@@ -57,12 +59,8 @@ export const OfferCard = ({ id }: OfferProps) => {
           <Group position="apart" style={{ marginTop: theme.spacing.sm }}>
             <Text size="sm" style={{ color: secondaryColor }}>
               <Text style={{ color: theme.colors.brand[0] }}>
-                5 ShibaInu/per night
+                {price} {paymentToken}/per night
               </Text>
-            </Text>
-            <Text size="sm" style={{ color: theme.colors.brand[0] }}>
-              {" "}
-              21.6 - 22.7
             </Text>
           </Group>
         </Card>
