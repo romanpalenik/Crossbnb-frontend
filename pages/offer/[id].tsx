@@ -1,5 +1,4 @@
 import {
-  Group,
   Title,
   Card,
   useMantineTheme,
@@ -13,8 +12,10 @@ import { useState } from "react";
 import { DateRangePicker } from "@mantine/dates";
 import offerStyles from "../../styles/offerDetail.module.css";
 import { AppFooter } from "../../components/partials/footer/footer";
+import { GetServerSideProps, NextPage } from "next";
+import { Web3Service } from "../../services/web3service";
 
-const OneOffer = () => {
+const OneOffer: NextPage = ({ offer }: any) => {
   const theme = useMantineTheme();
 
   const secondaryColor =
@@ -25,12 +26,20 @@ const OneOffer = () => {
     new Date(2021, 11, 5),
   ]);
 
+  const [numberOfNights, setNumberOfNights] = useState<number>(0);
+
   return (
-    <div style={{ display: "flex", justifyContent: "center" }}>
+    <div
+      style={{
+        display: "flex",
+        justifyContent: "center",
+        flexDirection: "column",
+      }}
+    >
       <div style={{ width: "80%" }}>
         <div>
-          <Title order={1}>Hlbkoka 32</Title>
-          <p> ikona 3-izbovy byt | ikona Levice </p>
+          <Title order={1}>{offer.address}</Title>
+          <p> ikona 3-izbovy byt | ikona {offer?.city} </p>
         </div>
 
         {/* image section */}
@@ -59,6 +68,7 @@ const OneOffer = () => {
                   height={400}
                   width={400}
                   alt="Norway"
+                  loading="lazy"
                 />
               </div>
               <div
@@ -71,6 +81,7 @@ const OneOffer = () => {
                   height={400}
                   width={400}
                   alt="Norway"
+                  loading="lazy"
                 />
               </div>
               <figure
@@ -113,9 +124,13 @@ const OneOffer = () => {
               label="Number of guest"
               radius="md"
               required
+              value={numberOfNights}
+              onChange={(val: number) => setNumberOfNights(val)}
             />
-            <p>One night</p>
-            <p>Number of night</p>
+            <p>
+              One night: {offer?.price} {offer?.paymentToken}
+            </p>
+            <p>Number of night: {numberOfNights}</p>
             <p> Total: </p>
             <Button
               variant="light"
@@ -141,6 +156,18 @@ const OneOffer = () => {
       <AppFooter></AppFooter>
     </div>
   );
+};
+
+export const getServerSideProps: GetServerSideProps = async (context) => {
+  let web3service = new Web3Service();
+
+  // const { id } = context.params;
+  const offer2 = await web3service.getOfferById(1);
+  const offer = await web3service.getCompleteInformationAboutOffer(offer2);
+
+  return {
+    props: { offer }, // will be passed to the page component as props
+  };
 };
 
 export default OneOffer;

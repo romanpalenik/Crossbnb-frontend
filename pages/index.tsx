@@ -9,15 +9,7 @@ import Link from "next/link";
 import { AppFooter } from "../components/partials/footer/footer";
 import Image from "next/image";
 
-declare global {
-  interface Window {
-    ethereum: MetaMaskInpageProvider;
-  }
-}
-
 const Home: NextPage = () => {
-  const [active, setActive] = useState(1);
-
   return (
     <div className={welcomeStyles.welcomeText}>
       <div style={{ marginBottom: "100px", display: "flex" }}>
@@ -44,6 +36,7 @@ const Home: NextPage = () => {
           alt="House to rent"
           width={800}
           height={400}
+          loading="lazy"
         ></Image>
       </div>
 

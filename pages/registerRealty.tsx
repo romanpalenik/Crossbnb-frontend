@@ -15,6 +15,9 @@ import { create } from "ipfs-http-client";
 import { useState } from "react";
 import { NFTContractAddress } from "../constant";
 import { nftAbi } from "../constant";
+import { Web3Service } from "../services/web3service";
+import { EthersService } from "../services/ethers.service";
+const { setupParentArgs, waitForTx, log } = require("../utils");
 
 const IPFS = require("ipfs-mini");
 const ipfs = new IPFS({
@@ -23,10 +26,13 @@ const ipfs = new IPFS({
   protocol: "https",
 });
 
+const ethers = require("ethers");
+
 // const client = create("https://ipfs.infura.io:5001/api/v0");
 
 const RegisterRealty: NextPage = () => {
-  const [city, setCity] = useState("Slovakia");
+  const ethersService = new EthersService();
+
   let Web3 = require("web3");
   let web3 = new Web3(Web3.givenProvider || "ws://localhost:7545");
   let account = web3.currentProvider.selectedAddress;
@@ -43,21 +49,7 @@ const RegisterRealty: NextPage = () => {
   });
 
   async function sendToken() {
-    console.log(form.values);
-    ipfs.addJSON(form.values, async (err: any, result: any) => {
-      console.log(err, result);
-      const url = `https://ipfs.infura.io/ipfs/${result}`;
-      console.log(url);
-      try {
-        let contract = new web3.eth.Contract(nftAbi, NFTContractAddress);
-        let response = await contract.methods
-          .mintNFT(url)
-          .send({ gas: "1000000", from: account });
-        console.log(response);
-      } catch (err) {
-        console.log(err);
-      }
-    });
+    ethersService.createReality(form);
   }
 
   return (

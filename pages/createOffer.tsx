@@ -3,6 +3,7 @@ import { useForm } from "@mantine/hooks";
 import React from "react";
 import { crossBnbAbi } from "../constant";
 import { CrossBnbContractAddress } from "../constant";
+import { EthersService } from "../services/ethers.service";
 
 const createOffer = () => {
   let Web3 = require("web3");
@@ -21,21 +22,9 @@ const createOffer = () => {
   });
 
   async function createRealEstate() {
-    console.log(`posielam z tohto uctu ${account}`);
-    try {
-      let response = await contract.methods
-        .createOffer(
-          form.values.NFTId,
-          form.values.price,
-          form.values.tokenForPayment
-        )
-        .send({ gas: "1000000", from: account });
-
-      console.log(response);
-    } catch (e) {
-      console.log(e);
-    }
     console.log(form.values);
+    const ethersService = new EthersService();
+    ethersService.createOffer(form);
   }
 
   return (

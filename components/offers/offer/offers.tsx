@@ -15,9 +15,17 @@ interface OfferProps {
   id: number;
   paymentToken: string;
   price: number;
+  name: string;
+  description: string;
 }
 
-export const OfferCard = ({ id, paymentToken, price }: OfferProps) => {
+export const OfferCard = ({
+  id,
+  paymentToken,
+  price,
+  name,
+  description,
+}: OfferProps) => {
   const theme = useMantineTheme();
 
   const secondaryColor =
@@ -46,14 +54,12 @@ export const OfferCard = ({ id, paymentToken, price }: OfferProps) => {
             style={{ marginBottom: 5, marginTop: theme.spacing.sm }}
           >
             <Text weight={500} style={{ color: theme.colors.brand[0] }}>
-              Norway Fjord Adventures
+              {name}
             </Text>
           </Group>
 
           <Text size="sm" style={{ color: secondaryColor, lineHeight: 1.5 }}>
-            With Fjord Tours you can explore more of the magical fjord
-            landscapes with tours and activities on and around the fjords of
-            Norway
+            {description}
           </Text>
 
           <Group position="apart" style={{ marginTop: theme.spacing.sm }}>

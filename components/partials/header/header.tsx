@@ -23,7 +23,7 @@ export default function AppHeader({ opened, setOpened }: HeaderProps) {
   let Web3 = require("web3");
   let web3 = new Web3(Web3.givenProvider || "ws://localhost:7545");
   let account = web3.currentProvider.selectedAddress;
-  const { connectWallet, address, error } = useWeb3();
+  // const { connectWallet, address, error } = useWeb3();
 
   // eslint-disable-next-line react-hooks/rules-of-hooks
   return (
@@ -103,9 +103,7 @@ export default function AppHeader({ opened, setOpened }: HeaderProps) {
               </Text>
             </Box>
           ) : (
-            <Button onClick={() => connectWallet("injected")}>
-              Connect to a wallet
-            </Button>
+            <Button onClick={() => console.log()}>Connect to a wallet</Button>
           )}
         </div>
       </Header>
