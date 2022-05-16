@@ -1,4 +1,7 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
+
+import { ethers } from 'ethers';
+import { MetaMaskInpageProvider } from '@metamask/providers';
 import {
   bridgeAbi,
   BridgeContractAddress,
@@ -9,8 +12,6 @@ import {
   NFTContractAddress,
 } from '../constant';
 
-const ethers = require('ethers');
-
 const IPFS = require('ipfs-mini');
 
 const ipfs = new IPFS({
@@ -19,12 +20,22 @@ const ipfs = new IPFS({
   protocol: 'https',
 });
 
+declare global {
+  interface Window {
+    ethereum?: MetaMaskInpageProvider;
+  }
+}
+
 export class EthersService {
   provider = new ethers.providers.JsonRpcProvider('http://localhost:8545');
   wallet = new ethers.Wallet(
     '0x000000000000000000000000000000000000000000000000000000616c696365',
     this.provider,
   );
+
+  // ts-ignore
+  // provider = new ethers.providers.Web3Provider(window.ethereum);
+  // signer = this.provider.getSigner();
 
   // Connect to the network
   erc721Instance = new ethers.Contract(NFTContractAddress, nftAbi, this.wallet);
@@ -39,6 +50,17 @@ export class EthersService {
     bridgeAbi,
     this.wallet,
   );
+
+  async someCall() {
+    // @ts-ignore
+    const provider = new ethers.providers.Web3Provider(window.ethereum);
+    const signer = provider.getSigner();
+    const contract = new ethers.Contract(NFTContractAddress, nftAbi, signer);
+    const tokens = await contract.balanceOf(
+      '0x8e0a907331554AF72563Bd8D43051C2E64Be5d35',
+    );
+    console.log('toto su tokeny', tokens);
+  }
 
   async createReality(form: any) {
     ipfs.addJSON(form.values, async (err: any, result: any) => {
@@ -82,6 +104,7 @@ export class EthersService {
   }
 
   async getCompleteInformationAboutOffer(offer: any) {
+    console.log('offer', offer);
     //need to make from offer a object with all information
     const completeOffer = {
       owner: offer.owner,
@@ -90,7 +113,9 @@ export class EthersService {
       paymentToken: offer.paymentToken,
       state: offer.state,
     };
-    const urlWithTokenData = await this.erc721Instance.tokenURI(0x35);
+    const urlWithTokenData = await this.erc721Instance.tokenURI(
+      `0x${offer.tokenId.toNumber()}`,
+    );
     const res = await fetch(urlWithTokenData);
     const tokenInfo = await res.json();
     return { ...completeOffer, ...tokenInfo };
@@ -112,9 +137,9 @@ export class EthersService {
     const data = `0x${
       ethers.utils
         .hexZeroPad(
-          ethers.utils
-            .bigNumberify(this.expandDecimals(amount, decimals))
-            .toHexString(),
+          ethers.BigNumber.from(
+            this.expandDecimals(amount, decimals),
+          ).toHexString(),
           32,
         )
         .substr(2) // Deposit Amount        (32 bytes)
@@ -143,16 +168,7 @@ export class EthersService {
       if (tx2.status === 1) {
         console.log('Transaction Successful!');
         console.log('Offer is yours');
-      } else {
-        console.log('Transaction Failed!');
-      }
-    });
-  }
-
-  async checkTxHash(txHash: any) {
-    this.provider.waitForTransaction(txHash).then(async (tx: any) => {
-      if (tx.status === 1) {
-        console.log('Transaction Successful!');
+        console.log(tx2);
       } else {
         console.log('Transaction Failed!');
       }

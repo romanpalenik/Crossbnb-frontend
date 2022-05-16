@@ -12,7 +12,7 @@ const Home: NextPage = () => (
   <div className={welcomeStyles.welcomeText}>
     <div style={{ marginBottom: '100px', display: 'flex' }}>
       <div style={{ marginRight: '50px' }}>
-        <Title order={1}>Let &apos s go to travel</Title>
+        <Title order={1}>Let&apos;s go to travel</Title>
         <Space h="lg" />
         <Text>
           Create rent offer or rent an apartment while taking advantage of cross

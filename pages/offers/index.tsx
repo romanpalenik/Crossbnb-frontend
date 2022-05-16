@@ -27,9 +27,16 @@ export interface allOfferInfo {
 
 const OrderPage: NextPage = () => {
   const [offers, setOffers] = useState<allOfferInfo[]>([]);
+  let run = 0;
 
   useEffect(() => {
+    console.log('toto prebehne 2 krat');
+    // eslint-disable-next-line eqeqeq
+    if (run != 0) {
+      return;
+    }
     async function getOffers() {
+      console.log('tento use effect sa teraz pustil');
       setOffers([]);
       // get offers from crossbnb
       const ethersService = new EthersService();
@@ -44,6 +51,7 @@ const OrderPage: NextPage = () => {
       }
     }
     getOffers();
+    run += 1;
   }, []);
 
   return (

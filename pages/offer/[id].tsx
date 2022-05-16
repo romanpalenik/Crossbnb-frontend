@@ -9,16 +9,18 @@ import {
 import Image from 'next/image';
 import React, { useEffect, useState } from 'react';
 import { DateRangePicker } from '@mantine/dates';
-import { GetServerSideProps, NextPage } from 'next';
+import { NextPage } from 'next';
 import offerStyles from '../../styles/offerDetail.module.css';
 import { AppFooter } from '../../components/partials/footer/footer';
 import { EthersService } from '../../services/ethers.service';
 
-const OneOffer: NextPage = ({ offer }: any) => {
+const OneOffer: NextPage = () => {
   const theme = useMantineTheme();
 
   const secondaryColor =
     theme.colorScheme === 'dark' ? theme.colors.dark[1] : theme.colors.gray[7];
+
+  const [offer, setOffer] = useState({} as any);
 
   const [value, setValue] = useState<[Date | null, Date | null]>([
     new Date(2021, 11, 1),
@@ -39,6 +41,18 @@ const OneOffer: NextPage = ({ offer }: any) => {
     const diffInDays = Math.round(diffInTime / oneDay);
     setNumberOfNights(diffInDays);
   }, [value]);
+
+  useEffect(() => {
+    async function getInfo() {
+      const ethersService = new EthersService();
+      const offer2 = await ethersService.getOfferById(0);
+      const offer3 = await ethersService.getCompleteInformationAboutOffer(
+        offer2,
+      );
+      setOffer(offer3);
+    }
+    getInfo();
+  }, []);
 
   function bookOffer() {
     const ethersService = new EthersService();
@@ -181,18 +195,6 @@ const OneOffer: NextPage = ({ offer }: any) => {
       <AppFooter />
     </div>
   );
-};
-
-export const getServerSideProps: GetServerSideProps = async context => {
-  const ethersService = new EthersService();
-
-  const { id } = context.params;
-  const offer2 = await ethersService.getOfferById(id);
-  const offer = await ethersService.getCompleteInformationAboutOffer(offer2);
-
-  return {
-    props: { offer }, // will be passed to the page component as props
-  };
 };
 
 export default OneOffer;
