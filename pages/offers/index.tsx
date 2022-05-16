@@ -41,7 +41,12 @@ const OrderPage: NextPage = () => {
       // get offers from crossbnb
       const ethersService = new EthersService();
       // eslint-disable-next-line @typescript-eslint/no-shadow
-      const offers = await ethersService.getAllOffers();
+      let offers = [];
+      try {
+        offers = await ethersService.getAllOffers();
+      } catch (e) {
+        console.log(e);
+      }
       for (let i = 0; i < offers.length; i += 1) {
         // eslint-disable-next-line no-await-in-loop
         const offer = await ethersService.getCompleteInformationAboutOffer(

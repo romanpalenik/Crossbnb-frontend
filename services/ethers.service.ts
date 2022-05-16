@@ -86,6 +86,7 @@ export class EthersService {
       form.values.NFTId,
       form.values.price,
       form.values.tokenForPayment,
+      form.values.address,
       {
         gasLimit: ethers.utils.hexlify(Number(800000)),
         gasPrice: ethers.utils.hexlify(Number(20000000000)),
@@ -95,6 +96,7 @@ export class EthersService {
 
   async getAllOffers() {
     const offers = await this.crossBnbContract.getAllOffers();
+    console.log('toto su offers', offers);
     return offers;
   }
 

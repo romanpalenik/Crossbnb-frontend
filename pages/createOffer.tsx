@@ -9,6 +9,7 @@ const createOffer = () => {
       NFTId: 0,
       tokenForPayment: '',
       price: 0,
+      address: '',
     },
   });
 
@@ -42,6 +43,12 @@ const createOffer = () => {
           // TODO
           // treba tam nastavit defaultne hodnotu
           {...form.getInputProps('tokenForPayment')}
+        />
+        <TextInput
+          required
+          label="Address to send tokens"
+          placeholder="0x00"
+          {...form.getInputProps('address')}
         />
 
         <Group position="right" mt="md">

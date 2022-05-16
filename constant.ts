@@ -741,7 +741,7 @@ export const nftAbi = [
 ];
 
 export const CrossBnbContractAddress =
-  '0x60B587Da064C78Dc9dFe62bd4C52c590292Adc75';
+  '0xffa473492A012F7FA74DB1d618EF20722eCf5061';
 export const crossBnbAbi = [
   {
     inputs: [],
@@ -767,6 +767,11 @@ export const crossBnbAbi = [
     ],
     name: 'offers',
     outputs: [
+      {
+        internalType: 'uint256',
+        name: 'id',
+        type: 'uint256',
+      },
       {
         internalType: 'address',
         name: 'owner',
@@ -807,6 +812,11 @@ export const crossBnbAbi = [
         name: 'occupiedOfferByUser',
         type: 'address',
       },
+      {
+        internalType: 'string',
+        name: 'adressToSendTokens',
+        type: 'string',
+      },
     ],
     stateMutability: 'view',
     type: 'function',
@@ -829,6 +839,11 @@ export const crossBnbAbi = [
         name: 'paymentToken',
         type: 'string',
       },
+      {
+        internalType: 'string',
+        name: 'adressToSendTokens',
+        type: 'string',
+      },
     ],
     name: 'createOffer',
     outputs: [],
@@ -848,6 +863,11 @@ export const crossBnbAbi = [
       {
         components: [
           {
+            internalType: 'uint256',
+            name: 'id',
+            type: 'uint256',
+          },
+          {
             internalType: 'address',
             name: 'owner',
             type: 'address',
@@ -886,6 +906,11 @@ export const crossBnbAbi = [
             internalType: 'address',
             name: 'occupiedOfferByUser',
             type: 'address',
+          },
+          {
+            internalType: 'string',
+            name: 'adressToSendTokens',
+            type: 'string',
           },
         ],
         internalType: 'struct Crossbnb.Offer',
@@ -904,6 +929,11 @@ export const crossBnbAbi = [
       {
         components: [
           {
+            internalType: 'uint256',
+            name: 'id',
+            type: 'uint256',
+          },
+          {
             internalType: 'address',
             name: 'owner',
             type: 'address',
@@ -942,6 +972,11 @@ export const crossBnbAbi = [
             internalType: 'address',
             name: 'occupiedOfferByUser',
             type: 'address',
+          },
+          {
+            internalType: 'string',
+            name: 'adressToSendTokens',
+            type: 'string',
           },
         ],
         internalType: 'struct Crossbnb.Offer[]',
@@ -960,6 +995,11 @@ export const crossBnbAbi = [
       {
         components: [
           {
+            internalType: 'uint256',
+            name: 'id',
+            type: 'uint256',
+          },
+          {
             internalType: 'address',
             name: 'owner',
             type: 'address',
@@ -998,6 +1038,11 @@ export const crossBnbAbi = [
             internalType: 'address',
             name: 'occupiedOfferByUser',
             type: 'address',
+          },
+          {
+            internalType: 'string',
+            name: 'adressToSendTokens',
+            type: 'string',
           },
         ],
         internalType: 'struct Crossbnb.Offer[]',
@@ -1031,6 +1076,34 @@ export const crossBnbAbi = [
       },
     ],
     name: 'changeOfferToPaid',
+    outputs: [],
+    stateMutability: 'nonpayable',
+    type: 'function',
+  },
+  {
+    inputs: [
+      {
+        internalType: 'uint256',
+        name: 'id',
+        type: 'uint256',
+      },
+      {
+        internalType: 'uint256',
+        name: 'occupiedOfferFrom',
+        type: 'uint256',
+      },
+      {
+        internalType: 'uint256',
+        name: 'occupiedOfferTo',
+        type: 'uint256',
+      },
+      {
+        internalType: 'address',
+        name: 'occupiedOfferByUser',
+        type: 'address',
+      },
+    ],
+    name: 'changeOfferToOccupied',
     outputs: [],
     stateMutability: 'nonpayable',
     type: 'function',
